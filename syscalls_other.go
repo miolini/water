@@ -17,3 +17,7 @@ type ifReq struct {
 func createInterface(fd uintptr, ifName string, flags uint16) (createdIFName string, err error) {
 	panic("water: createInterface not implemented on this platform")
 }
+
+func setPersistent(fd uintptr, persistent bool) error {
+	panic("water: setPersistent not implemented on this platform")
+}
