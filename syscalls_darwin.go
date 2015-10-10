@@ -10,10 +10,11 @@ import "C"
 import (
 	"errors"
 	"fmt"
-	"github.com/inercia/kernctl"
 	"os"
 	"syscall"
 	"unsafe"
+
+	"github.com/inercia/kernctl"
 )
 
 const UTUN_CONTROL_NAME = "com.apple.net.utun_control"
@@ -81,5 +82,5 @@ func createInterface(ifName string) (createdIFName string, file *os.File, err er
 }
 
 func setPersistent(fd uintptr, persistent bool) error {
-	panic("setPersistent not defined on OS X")
+	return errors.New("setPersistent not defined on OS X")
 }
