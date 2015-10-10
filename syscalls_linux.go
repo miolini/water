@@ -6,6 +6,7 @@ import (
 	"strings"
 	"syscall"
 	"unsafe"
+	"os"
 )
 
 const (
@@ -20,6 +21,32 @@ type ifReq struct {
 	pad   [0x28 - 0x10 - 2]byte
 }
 
+func newTAP(ifName string) (ifce *Interface, err error) {
+	file, err := os.OpenFile("/dev/net/tun", os.O_RDWR, 0)
+	if err != nil {
+		return nil, err
+	}
+	name, err := createInterface(file.Fd(), ifName, cIFF_TAP|cIFF_NO_PI)
+	if err != nil {
+		return nil, err
+	}
+	ifce = &Interface{isTAP: true, file: file, name: name}
+	return
+}
+
+func newTUN(ifName string) (ifce *Interface, err error) {
+	file, err := os.OpenFile("/dev/net/tun", os.O_RDWR, 0)
+	if err != nil {
+		return nil, err
+	}
+	name, err := createInterface(file.Fd(), ifName, cIFF_TUN|cIFF_NO_PI)
+	if err != nil {
+		return nil, err
+	}
+	ifce = &Interface{isTAP: false, file: file, name: name}
+	return
+}
+
 func createInterface(fd uintptr, ifName string, flags uint16) (createdIFName string, err error) {
 	var req ifReq
 	req.Flags = flags
@@ -32,7 +59,6 @@ func createInterface(fd uintptr, ifName string, flags uint16) (createdIFName str
 	createdIFName = strings.Trim(string(req.Name[:]), "\x00")
 	return
 }
-
 
 func setPersistent(fd uintptr, persistent bool) error {
 	var val uintptr = 0
