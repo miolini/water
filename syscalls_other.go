@@ -12,4 +12,5 @@ func newTUN(ifName string) (ifce *Interface, err error) {
 
 func setPersistent(fd uintptr, persistent bool) error {
 	panic("water: setPersistent not implemented on this platform")
+}
 
