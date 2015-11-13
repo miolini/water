@@ -15,14 +15,14 @@ It is a fork of [https://github.com/songgao/water](songgao/water).
 
 ## Installation
 ```
-go get -u github.com/hsheth2/water
-go get -u github.com/hsheth2/water/waterutil
+go get -u github.com/songgao/water
+go get -u github.com/songgao/water/waterutil
 ```
 
 ## Documentation
-[http://godoc.org/github.com/hsheth2/water](http://godoc.org/github.com/hsheth2/water)
+[http://godoc.org/github.com/songgao/water](http://godoc.org/github.com/songgao/water)
 
-[http://godoc.org/github.com/hsheth2/water/waterutil](http://godoc.org/github.com/hsheth2/water/waterutil)
+[http://godoc.org/github.com/songgao/water/waterutil](http://godoc.org/github.com/songgao/water/waterutil)
 
 ## Example
 
@@ -30,8 +30,8 @@ go get -u github.com/hsheth2/water/waterutil
 package main
 
 import (
-	"github.com/hsheth2/water"
-	"github.com/hsheth2/water/waterutil"
+	"github.com/songgao/water"
+	"github.com/songgao/water/waterutil"
 	"fmt"
 )
 
