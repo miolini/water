@@ -17,10 +17,10 @@ import (
 	"github.com/inercia/kernctl"
 )
 
-const UTUN_CONTROL_NAME = "com.apple.net.utun_control"
-const UTUN_OPT_IFNAME = 2
+const utunControlName = "com.apple.net.utun_control"
+const utunOptIfName = 2
 
-var ERROR_NOT_DEVICE_FOUND = errors.New("could not find valid tun/tap device")
+var errorNotDeviceFound = errors.New("could not find valid tun/tap device")
 
 // Create a new TAP interface whose name is ifName.
 // If ifName is empty, a default name (tap0, tap1, ... ) will be assigned.
@@ -48,20 +48,20 @@ func newTUN(ifName string) (ifce *Interface, err error) {
 
 func createInterface(ifName string) (createdIFName string, file *os.File, err error) {
 	file = nil
-	err = ERROR_NOT_DEVICE_FOUND
+	err = errorNotDeviceFound
 
 	var readBufLen C.int = 20
 	var readBuf = C.CString("                    ")
 	defer C.free(unsafe.Pointer(readBuf))
 
 	for utunnum := 0; utunnum < 255; utunnum++ {
-		conn := kernctl.NewConnByName(UTUN_CONTROL_NAME)
+		conn := kernctl.NewConnByName(utunControlName)
 		conn.UnitId = uint32(utunnum + 1)
 		conn.Connect()
 
 		_, _, gserr := syscall.Syscall6(syscall.SYS_GETSOCKOPT,
 			uintptr(conn.Fd),
-			uintptr(kernctl.SYSPROTO_CONTROL), uintptr(UTUN_OPT_IFNAME),
+			uintptr(kernctl.SYSPROTO_CONTROL), uintptr(utunOptIfName),
 			uintptr(unsafe.Pointer(readBuf)), uintptr(unsafe.Pointer(&readBufLen)), 0)
 		if gserr != 0 {
 			continue

@@ -1,4 +1,4 @@
-// +build !linux,!darwin
+// +build darwin
 
 package water
 
@@ -8,5 +8,5 @@ import (
 )
 
 func setupIfce(t *testing.T, ipNet net.IPNet, dev string) {
-	t.Fatal("unsupported platform")
+	t.Fatal("darwin tests not yet implemented")
 }
