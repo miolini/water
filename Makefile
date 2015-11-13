@@ -1,4 +1,4 @@
-# Makefile for Golang Network Stack
+# Makefile
 
 SHELL = /bin/bash
 
@@ -14,6 +14,10 @@ clean:
 	-rm -f *.cover
 	-rm -f *.html
 	go clean ./...
+platforms:
+	GOOS=linux go build ./...
+	GOOS=darwin go build ./...
+	GOOS=windows go build ./...
 
 # line counting
 lines:
